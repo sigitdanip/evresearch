@@ -30,33 +30,14 @@ _CLASS_SUMMARY = json.dumps(
 )
 
 _SURVEY_QUERIES = """
-Pass 1 — Angkot-class (target ≥5):
-  - "Toyota Kijang Minibus specifications dimensions mm Indonesia"
-  - "Daihatsu Gran Max minibus technical specifications"
-  - "Isuzu Elf NKR 55 dimensions wheelbase capacity"
-  - "Suzuki Carry minibus dimensions Indonesia specifications"
-  - "Daihatsu Hijet specifications angkot Indonesia"
-  - "Mitsubishi L300 minibus specifications dimensions"
-  - "Toyota Avanza minibus angkot dimensions"
+Search Strategy — Angkot-class (target ≥5):
+  Use broad keywords like "spesifikasi dimensi Toyota Kijang minibus" or "Suzuki Carry minibus dimensions"
 
-Pass 2 — Small Bus/Mikrobus (target ≥8):
-  - "Isuzu Elf NKR 71 bus specifications length width height"
-  - "Toyota Coaster specifications dimensions capacity"
-  - "Mitsubishi Rosa specifications technical dimensions"
-  - "Hino Poncho EV specifications dimensions Japan"
-  - "Karsan e-Jest EV specifications dimensions"
-  - "BisKita Trans Pakuan vehicle specifications Bogor"
-  - "EasyMile EZ10 autonomous shuttle dimensions specifications"
-  - "King Long XMQ6802 specifications dimensions"
-  - "Yutong E8 EV bus specifications dimensions"
-  - "Hino Dutro Small Bus specifications"
+Search Strategy — Small Bus/Mikrobus (target ≥8):
+  Use broad keywords like "Isuzu Elf NKR 71 spesifikasi dimensi", "Toyota Coaster dimensions capacity", or "Karsan e-Jest EV spesifikasi"
 
-Pass 3 — Medium Bus (target ≥5):
-  - "Hino Dutro 110 SDL specifications dimensions"
-  - "Mercedes-Benz OF 1521 bus specifications"
-  - "Isuzu NQR bus specifications dimensions"
-  - "MAN Lion City bus specifications dimensions"
-  - "Zhongtong LCK6108EV EV bus specifications"
+Search Strategy — Medium Bus (target ≥5):
+  Use broad keywords like "Hino Dutro 110 SDL dimensions", "Mercedes-Benz OF 1521 specifications", or "Isuzu NQR bus dimensions"
 """
 
 _AGENT_SYSTEM_SUFFIX = f"""
@@ -182,10 +163,10 @@ def run_phase1(state: dict) -> dict:
             f"SEARCH PLAN:\n{_SURVEY_QUERIES}\n\n"
             "Output a JSON object with key 'vehicles' containing an array of vehicle "
             "records matching this schema per vehicle:\n"
-            '{"vehicle_id":"survey_001","vehicle_class":"small_bus","make":"Isuzu",'
-            '"model":"Elf NKR 71","year":2022,"powertrain":"diesel","oal_mm":5990,'
-            '"oaw_mm":1985,"oah_mm":2430,"capacity_seated":20,"gvw_kg":5500,'
-            '"kerb_weight_kg":2900,"source_url":"https://...","data_confidence":"verified","notes":""}'
+            '{"vehicle_id":"survey_001","vehicle_class":"<string>","make":"<string>",'
+            '"model":"<string>","year":<int>,"powertrain":"<string>","oal_mm":<int>,'
+            '"oaw_mm":<int>,"oah_mm":<int>,"capacity_seated":<int>,"gvw_kg":<int>,'
+            '"kerb_weight_kg":<int>,"source_url":"<url>","data_confidence":"<verified|estimated|unverified>","notes":"<string>"}'
         ),
         expected_output=(
             "A JSON object with key 'vehicles' containing an array of ≥20 vehicle records, "
@@ -202,8 +183,8 @@ def run_phase1(state: dict) -> dict:
             "Compute per-class statistics: count, OAL/OAW/OAH min/max/mean/p25/p75, "
             "capacity_seated min/max/mean, gvw_kg min/max/mean. "
             "Output JSON matching:\n"
-            '{"validation_passed":true,"survey_summary":{"angkot":{...},"small_bus":{...},'
-            '"medium_bus":{...}},"deficient_classes":[],"verified_count":12}'
+            '{"validation_passed":<bool>,"survey_summary":{"angkot":{...},"small_bus":{...},'
+            '"medium_bus":{...}},"deficient_classes":[<list of strings>],"verified_count":<int>}'
         ),
         expected_output=(
             "JSON with validation_passed (bool), survey_summary with per-class stats, "
@@ -223,12 +204,12 @@ def run_phase1(state: dict) -> dict:
             "- Minimum headroom clearance in mm (stature + 50mm clearance)\n"
             "- Minimum seat pitch in mm (hip-to-knee + 50mm comfort margin)\n"
             "- Minimum aisle clear width in mm\n"
-            "Search: 'Indonesian anthropometry WHO SEARO body dimensions', "
-            "'SNI ergonomi kendaraan umum Indonesia', 'Southeast Asian anthropometry 95th percentile'\n"
+            "Search strategy: Use broad terms like 'Indonesian anthropometry WHO SEARO body dimensions' or "
+            "'SNI ergonomi kendaraan umum Indonesia'\n"
             "Output JSON:\n"
-            '{"p95_stature_mm":1672,"p95_shoulder_width_mm":458,"p95_hip_breadth_seated_mm":382,'
-            '"min_headroom_mm":1850,"min_seat_pitch_mm":720,"min_aisle_width_mm":380,'
-            '"source":"WHO SEARO 2012 + SNI..."}'
+            '{"p95_stature_mm":<int>,"p95_shoulder_width_mm":<int>,"p95_hip_breadth_seated_mm":<int>,'
+            '"min_headroom_mm":<int>,"min_seat_pitch_mm":<int>,"min_aisle_width_mm":<int>,'
+            '"source":"<string citing data sources>"}'
         ),
         expected_output="JSON with all anthropometry fields and source citation.",
         agent=anthropometry_specialist,
@@ -245,9 +226,9 @@ def run_phase1(state: dict) -> dict:
             "- Maximum comfortable step height for general public\n"
             "- Floor type preference (low-entry vs high-floor)\n"
             "Output JSON:\n"
-            '{"angkot_boarding_time_s_per_passenger":3.2,"preferred_door_width_mm":820,'
-            '"max_comfortable_step_height_mm":230,"preferred_floor_type":"low-entry",'
-            '"source":"BPS Kota Bogor 2023 + BisKita field study"}'
+            '{"angkot_boarding_time_s_per_passenger":<float>,"preferred_door_width_mm":<int>,'
+            '"max_comfortable_step_height_mm":<int>,"preferred_floor_type":"<string>",'
+            '"source":"<string citing data sources>"}'
         ),
         expected_output="JSON with boarding rate, door width, step height, floor type, and source.",
         agent=flow_analyst,
@@ -262,9 +243,9 @@ def run_phase1(state: dict) -> dict:
             "Aggregate results into:\n"
             '{"capacity_candidates":[18,20,22],'
             '"internal_footprints":{'
-            '"18":{"internal_length_mm":5560,"internal_width_mm":1740,"rows":5},'
-            '"20":{"internal_length_mm":6000,"internal_width_mm":1740,"rows":5},'
-            '"22":{"internal_length_mm":6440,"internal_width_mm":1740,"rows":6}}}'
+            '"18":{"internal_length_mm":<int>,"internal_width_mm":<int>,"rows":<int>},'
+            '"20":{"internal_length_mm":<int>,"internal_width_mm":<int>,"rows":<int>},'
+            '"22":{"internal_length_mm":<int>,"internal_width_mm":<int>,"rows":<int>}}}'
         ),
         expected_output=(
             "JSON with capacity_candidates list [18, 20, 22] and internal_footprints "
@@ -338,7 +319,7 @@ def run_phase1(state: dict) -> dict:
                     phase1_data["ingress_egress"] = parsed
                 elif task_name == "capacity":
                     phase1_data["capacity_candidates"] = parsed.get("capacity_candidates", [18, 20, 22])
-            except (json.JSONDecodeError, IndexError, KeyError):
-                pass  # Keep defaults — gate will prompt human for correction
+            except (json.JSONDecodeError, IndexError, KeyError) as e:
+                print(f"  [Warning] Failed to parse JSON from {task_name}: {e}")
 
     return phase1_data
