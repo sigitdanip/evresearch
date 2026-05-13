@@ -11,6 +11,15 @@ def get_questions(state: dict) -> list[Question]:
     # Find the 20-pax candidate for GVW display
     cap20 = next((c for c in candidates if c.get("capacity") == 20), {})
     gvw_20 = cap20.get("gvw_kg", 5450)
+    
+    survey = state.get("phase1", {}).get("survey_summary", {}).get("small_bus", {})
+    oal_p75 = survey.get("oal_p75", 6400)
+    oaw_p75 = survey.get("oaw_p75", 2120)
+    offsets = state.get("phase2", {}).get("structural_offsets_mm", {})
+    side_wall = offsets.get("side_wall_each", 120)
+    floor_stack = offsets.get("floor_stack", 350)
+    front_overhang = offsets.get("front_overhang", 800)
+    rear_overhang = offsets.get("rear_overhang", 600)
 
     return [
         Question(
@@ -31,28 +40,28 @@ def get_questions(state: dict) -> list[Question]:
         Question(
             id="q2.2",
             prompt="Maximum acceptable Overall Length (OAL) in mm",
-            suggested="6200",
+            suggested=str(oal_p75),
             reason="Leaves turning radius margin for Phase 3 swept-path filter",
-            range_hint="Survey p75 for small bus: 6,400mm. Bogor constraint: assess in Phase 3.",
+            range_hint=f"Survey p75 for small bus: {oal_p75}mm. Bogor constraint: assess in Phase 3.",
             validator=lambda v: (v.isdigit() and 5000 <= int(v) <= 7000, "Must be integer 5000–7000mm"),
         ),
         Question(
             id="q2.3",
             prompt="Maximum acceptable Overall Width (OAW) in mm",
-            suggested="2050",
-            reason="Bogor typical lane 3.2m → OAW 2050mm leaves 575mm each side",
-            range_hint="Survey p75 for small bus: 2,120mm. Bogor lane: ~3,200mm.",
+            suggested=str(oaw_p75),
+            reason="Bogor typical lane 3.2m → OAW leaves appropriate side clearance",
+            range_hint=f"Survey p75 for small bus: {oaw_p75}mm. Bogor lane: ~3,200mm.",
             validator=lambda v: (v.isdigit() and 1900 <= int(v) <= 2200, "Must be integer 1900–2200mm"),
         ),
         Question(
             id="q2.4",
             prompt="Structural offset acceptance",
             options=[
-                QuestionOption("Accept all defaults (side_wall 120mm, floor 350mm, overhangs 800/600mm)",
+                QuestionOption(f"Accept all researched offsets (side_wall {side_wall}mm, floor {floor_stack}mm, overhangs {front_overhang}/{rear_overhang}mm)",
                                "derived from SNI + survey benchmarks"),
                 QuestionOption("Override (use override section below)", "custom values"),
             ],
-            suggested="Accept all defaults (side_wall 120mm, floor 350mm, overhangs 800/600mm)",
+            suggested=f"Accept all researched offsets (side_wall {side_wall}mm, floor {floor_stack}mm, overhangs {front_overhang}/{rear_overhang}mm)",
         ),
         Question(
             id="q2.5",

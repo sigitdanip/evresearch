@@ -16,6 +16,12 @@ def get_questions(state: dict) -> list[Question]:
     min_aisle = anthro.get("min_aisle_width_mm", 380)
     boarding_s = ingress.get("angkot_boarding_time_s_per_passenger", 3.2)
 
+    survey = phase1.get("survey_summary", {}).get("small_bus", {})
+    survey_pitch = survey.get("seat_pitch_min", 680)
+    survey_pitch_max = survey.get("seat_pitch_max", 780)
+    survey_aisle = survey.get("aisle_width_min", 360)
+    survey_aisle_max = survey.get("aisle_width_max", 450)
+
     return [
         Question(
             id="q1.1",
@@ -54,16 +60,16 @@ def get_questions(state: dict) -> list[Question]:
             id="q1.4",
             prompt=f"Minimum seat pitch in mm (p95 requires ≥{min_seat_pitch}mm)",
             suggested=str(min_seat_pitch),
-            reason=f"Indonesian p95 stature {p95_stature}mm → hip-to-knee ~670mm + 50mm comfort",
-            range_hint="Survey range in target class: 680–780mm. Minimum: 720mm.",
+            reason=f"Indonesian p95 stature {p95_stature}mm → computed requirement: {min_seat_pitch}mm",
+            range_hint=f"Survey range in target class: {survey_pitch}–{survey_pitch_max}mm. Minimum: {min_seat_pitch}mm.",
             validator=lambda v: (v.isdigit() and 680 <= int(v) <= 900, "Must be an integer 680–900"),
         ),
         Question(
             id="q1.5",
             prompt=f"Minimum aisle clear width in mm (p95 requires ≥{min_aisle}mm)",
-            suggested="400",
-            reason="380mm is the anthropometric minimum; 400mm provides comfort margin",
-            range_hint="Survey range: 360–450mm. Minimum per research: 380mm.",
+            suggested=str(min_aisle),
+            reason=f"{min_aisle}mm is the researched anthropometric minimum with comfort margin",
+            range_hint=f"Survey range: {survey_aisle}–{survey_aisle_max}mm. Minimum per research: {min_aisle}mm.",
             validator=lambda v: (v.isdigit() and 360 <= int(v) <= 600, "Must be an integer 360–600"),
         ),
     ]

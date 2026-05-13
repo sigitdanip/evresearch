@@ -13,23 +13,28 @@ def get_questions(state: dict) -> list[Question]:
     power_reqs = phase3.get("powertrain_requirements", {})
     base_power = power_reqs.get("recommended_continuous_kw", 57.0)
 
+    corner = env.get("tightest_turning_radius_m", 7.2)
+    cap20 = next((c for c in surviving if c.get("capacity") == 20), {})
+    swept_path_20 = cap20.get("swept_path_m", 7.4)
+    margin = round(swept_path_20 - corner, 1)
+
     return [
         Question(
             id="q3.1",
             prompt=(
                 "Marginal pass decision for 20-pax candidate\n"
-                "  20-pax swept path: ~7.4m vs tightest Bogor corner: ~7.2m (0.2m over)\n"
-                "  Within driver skill variation."
+                f"  20-pax swept path: ~{swept_path_20}m vs tightest Bogor corner: ~{corner}m ({margin}m margin)\n"
+                "  Assess if this is within driver skill variation."
             ),
             options=[
-                QuestionOption("Accept 20-pax, constrain routes to avoid 7.2m corner",
+                QuestionOption(f"Accept 20-pax, constrain routes to avoid {corner}m corner",
                                "viable with route planning"),
                 QuestionOption("Accept 20-pax, flag route constraint for Phase 4 ops",
                                "document in operations manual"),
                 QuestionOption("Drop 20-pax, select 18-pax (clear pass)", "conservative choice"),
             ],
             suggested="Accept 20-pax, flag route constraint for Phase 4 ops",
-            reason="0.2m margin is within driver skill; route constraint is manageable",
+            reason=f"{margin}m margin may be within driver skill; route constraint is manageable",
         ),
         Question(
             id="q3.2",

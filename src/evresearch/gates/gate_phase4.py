@@ -54,7 +54,7 @@ def get_questions(state: dict) -> list[Question]:
             prompt=f"Usable battery capacity to carry into Phase 5 sourcing (calculated: {usable_kwh}kWh)",
             suggested=str(usable_kwh) if usable_kwh else "165",
             reason="Includes 20% DoD reserve and 1.3× safety factor",
-            range_hint="Practical range for this vehicle class: 120–200kWh.",
+            range_hint=f"Agent calculated target: {usable_kwh}kWh based on {daily_km}km range.",
             validator=lambda v: (v.replace(".", "").isdigit() and 80 <= float(v) <= 300,
                                  "Must be a number 80–300 kWh"),
         ),
