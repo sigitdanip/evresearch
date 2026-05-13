@@ -1,0 +1,217 @@
+{
+  "meta": {
+    "run_id": "db2f41c4-957a-4edc-92de-c0a4205194f9",
+    "started_at": "2026-05-12T06:25:04.842056+00:00",
+    "last_completed_phase": 2,
+    "status": "awaiting_gate",
+    "user_constraints": {}
+  },
+  "survey": {
+    "total_count": 0,
+    "by_class": {
+      "angkot": [],
+      "small_bus": [],
+      "medium_bus": []
+    },
+    "status": "incomplete"
+  },
+  "phase1": {
+    "survey_summary": {
+      "angkot": {
+        "count": 7,
+        "oal_mm": {
+          "min": 3800,
+          "max": 4810,
+          "mean": 4257.14,
+          "p25": 3922.5,
+          "p75": 4565
+        },
+        "oaw_mm": {
+          "min": 1465,
+          "max": 1830,
+          "mean": 1656.43,
+          "p25": 1582.5,
+          "p75": 1720
+        },
+        "oah_mm": {
+          "min": 1700,
+          "max": 1955,
+          "mean": 1822.86,
+          "p25": 1720,
+          "p75": 1907.5
+        },
+        "capacity_seated": {
+          "min": 8,
+          "max": 12,
+          "mean": 8.86
+        },
+        "gvw_kg": {
+          "min": 1200,
+          "max": 2345,
+          "mean": 1663.57,
+          "p25": 1550,
+          "p75": 1600
+        }
+      },
+      "small_bus": {
+        "count": 10,
+        "oal_mm": {
+          "min": 4020,
+          "max": 8405,
+          "mean": 6414,
+          "p25": 5901.25,
+          "p75": 6990
+        },
+        "oaw_mm": {
+          "min": 1695,
+          "max": 2500,
+          "mean": 2051.8,
+          "p25": 1937.5,
+          "p75": 2097.5
+        },
+        "oah_mm": {
+          "min": 2127,
+          "max": 3356,
+          "mean": 2710.3,
+          "p25": 2367.5,
+          "p75": 2787.5
+        },
+        "capacity_seated": {
+          "min": 6,
+          "max": 40,
+          "mean": 24.9
+        },
+        "gvw_kg": {
+          "min": 3745,
+          "max": 14000,
+          "mean": 7069.5,
+          "p25": 5025,
+          "p75": 7750
+        }
+      },
+      "medium_bus": {
+        "count": 6,
+        "oal_mm": {
+          "min": 7000,
+          "max": 12185,
+          "mean": 9926.83,
+          "p25": 8883.5,
+          "p75": 10918.5
+        },
+        "oaw_mm": {
+          "min": 2000,
+          "max": 2550,
+          "mean": 2372.5,
+          "p25": 2296.25,
+          "p75": 2500
+        },
+        "oah_mm": {
+          "min": 2800,
+          "max": 3450,
+          "mean": 3085,
+          "p25": 2865,
+          "p75": 3250
+        },
+        "capacity_seated": {
+          "min": 30,
+          "max": 60,
+          "mean": 41.17
+        },
+        "gvw_kg": {
+          "min": 8000,
+          "max": 18000,
+          "mean": 14333.33,
+          "p25": 13500,
+          "p75": 16000
+        }
+      }
+    },
+    "anthropometry": {
+      "p95_stature_mm": 1672,
+      "p95_shoulder_width_mm": 458,
+      "p95_hip_breadth_seated_mm": 382,
+      "min_headroom_mm": 1850,
+      "min_seat_pitch_mm": 720,
+      "min_aisle_width_mm": 380,
+      "source": "WHO SEARO 2012 + SNI 9011:2021 + Anthropometry of Singaporean and Indonesian Populations (2010) + Indonesian Anthropometry Update for Special Populations (Hartono 2018)"
+    },
+    "ingress_egress": {
+      "angkot_boarding_time_s_per_passenger": 3.5,
+      "preferred_door_width_mm": 800,
+      "max_comfortable_step_height_mm": 180,
+      "preferred_floor_type": "low-entry",
+      "source": "BPS Kota Bogor 2023 + TransJakarta dwell time study + Indonesian accessibility standards"
+    },
+    "capacity_candidates": [
+      18,
+      20,
+      22
+    ],
+    "gate_decisions": {
+      "q1.1": "20",
+      "q1.2": "30%",
+      "q1.3": "low-entry",
+      "q1.4": "720",
+      "q1.5": "400"
+    },
+    "_raw_outputs": {
+      "survey": "```json\n{\n  \"vehicles\": [\n    {\n      \"vehicle_id\": \"survey_001\",\n      \"vehicle_class\": \"angkot\",\n      \"make\": \"Toyota\",\n      \"model\": \"Kijang Innova KF80\",\n      \"year\": 2005,\n      \"powertrain\": \"petrol\",\n      \"oal_mm\": 4735,\n      \"oaw_mm\": 1830,\n      \"oah_mm\": 1720,\n      \"capacity_seated\": 9,\n      \"gvw_kg\": 1800,\n      \"kerb_weight_kg\": 1300,\n      \"source_url\": \"https://en.wikipedia.org/wiki/Toyota_Kijang\",\n      \"data_confidence\": \"estimated\",\n      \"notes\": \"Minibus conversion for angkot use; 2.0L 5R-FE (78kW) or 2.7L 3RZ-FE (112kW) common in Indonesia\"\n    },\n    {\n      \"vehicle_id\": \"survey_002\",\n      \"vehicle_class\": \"angkot\",\n      \"make\": \"Daihatsu\",\n      \"model\": \"Gran Max Minibus 1.5\",\n      \"year\": 2020,\n      \"powertrain\": \"petrol\",\n      \"oal_mm\": 4045,\n      \"oaw_mm\": 1665,\n      \"oah_mm\": 1900,\n      \"capacity_seated\": 9,\n      \"gvw_kg\": 1600,\n      \"kerb_weight_kg\": 1160,\n      \"source_url\": \"https://www.oto.com/en/mobil-baru/daihatsu/gran-max-mb/spesifikasi\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"1.5L 3SZ-VE DOHC VVT-i; 71kW/134Nm; Indonesia's most popular angkot chassis\"\n    },\n    {\n      \"vehicle_id\": \"survey_003\",\n      \"vehicle_class\": \"angkot\",\n      \"make\": \"Mitsubishi\",\n      \"model\": \"L300 Minibus 2.4\",\n      \"year\": 2020,\n      \"powertrain\": \"petrol\",\n      \"oal_mm\": 4810,\n      \"oaw_mm\": 1695,\n      \"oah_mm\": 1955,\n      \"capacity_seated\": 12,\n      \"gvw_kg\": 2345,\n      \"kerb_weight_kg\": 1700,\n      \"source_url\": \"https://www.pakwheels.com/new-cars/mitsubishi/l300/specifications/\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"2.4L 4G64; 72kW/200Nm; 12-seat minibus variant widely used as angkot\"\n    },\n    {\n      \"vehicle_id\": \"survey_004\",\n      \"vehicle_class\": \"angkot\",\n      \"make\": \"Daihatsu\",\n      \"model\": \"Luxio 1.5\",\n      \"year\": 2014,\n      \"powertrain\": \"petrol\",\n      \"oal_mm\": 4215,\n      \"oaw_mm\": 1710,\n      \"oah_mm\": 1915,\n      \"capacity_seated\": 8,\n      \"gvw_kg\": 1600,\n      \"kerb_weight_kg\": 1310,\n      \"source_url\": \"https://en.wikipedia.org/wiki/Daihatsu_Luxio\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"1.5L 3SZ-VE; 71kW/134Nm; 2014 facelift model; upmarket Gran Max passenger variant\"\n    },\n    {\n      \"vehicle_id\": \"survey_005\",\n      \"vehicle_class\": \"angkot\",\n      \"make\": \"Suzuki\",\n      \"model\": \"Carry PV 1.0 Minibus\",\n      \"year\": 2019,\n      \"powertrain\": \"petrol\",\n      \"oal_mm\": 3800,\n      \"oaw_mm\": 1465,\n      \"oah_mm\": 1720,\n      \"capacity_seated\": 8,\n      \"gvw_kg\": 1200,\n      \"kerb_weight_kg\": 680,\n      \"source_url\": \"https://www.oto.com/en/mobil-baru/suzuki/carry-blind-van/spesifikasi\",\n      \"data_confidence\": \"estimated\",\n      \"notes\": \"1.0L F10A; 40.5kW/76.5Nm; body conversion extends from standard 3395mm OAL for angkot use\"\n    },\n    {\n      \"vehicle_id\": \"survey_006\",\n      \"vehicle_class\": \"angkot\",\n      \"make\": \"Toyota\",\n      \"model\": \"Avanza 1.5 Veloz\",\n      \"year\": 2012,\n      \"powertrain\": \"petrol\",\n      \"oal_mm\": 4395,\n      \"oaw_mm\": 1730,\n      \"oah_mm\": 1700,\n      \"capacity_seated\": 8,\n      \"gvw_kg\": 1600,\n      \"kerb_weight_kg\": 1200,\n      \"source_url\": \"https://en.wikipedia.org/wiki/Toyota_Avanza\",\n      \"data_confidence\": \"estimated\",\n      \"notes\": \"1.5L 3SZ-VE; 81kW/136Nm; converted from standard 7-seat to 8-seat angkot\"\n    },\n    {\n      \"vehicle_id\": \"survey_007\",\n      \"vehicle_class\": \"angkot\",\n      \"make\": \"Daihatsu\",\n      \"model\": \"Hijet 55 Wide\",\n      \"year\": 2015,\n      \"powertrain\": \"petrol\",\n      \"oal_mm\": 3800,\n      \"oaw_mm\": 1500,\n      \"oah_mm\": 1850,\n      \"capacity_seated\": 8,\n      \"gvw_kg\": 1500,\n      \"kerb_weight_kg\": 850,\n      \"source_url\": \"https://www.dimensions.com/element/daihatsu-hijet\",\n      \"data_confidence\": \"estimated\",\n      \"notes\": \"Base vehicle 3395mm extended and widened in angkot body conversion; 1.0L EJ-VE ~45kW\"\n    },\n    {\n      \"vehicle_id\": \"survey_008\",\n      \"vehicle_class\": \"small_bus\",\n      \"make\": \"Isuzu\",\n      \"model\": \"Elf NKR 55 Microbus LWB\",\n      \"year\": 2022,\n      \"powertrain\": \"diesel\",\n      \"oal_mm\": 5505,\n      \"oaw_mm\": 1695,\n      \"oah_mm\": 2127,\n      \"capacity_seated\": 20,\n      \"gvw_kg\": 5100,\n      \"kerb_weight_kg\": 1650,\n      \"source_url\": \"https://www.kreditisuzu.com/elf-nkr-55-microbus-lwb-bus/\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"2.8L 4JB1-TC OHV DI 4-cyl; 100PS/73.5kW; 22.5kgm/220.7Nm; long wheelbase microbus\"\n    },\n    {\n      \"vehicle_id\": \"survey_009\",\n      \"vehicle_class\": \"small_bus\",\n      \"make\": \"Isuzu\",\n      \"model\": \"Elf NKR 71\",\n      \"year\": 2022,\n      \"powertrain\": \"diesel\",\n      \"oal_mm\": 5905,\n      \"oaw_mm\": 1920,\n      \"oah_mm\": 2280,\n      \"capacity_seated\": 24,\n      \"gvw_kg\": 7000,\n      \"kerb_weight_kg\": 2320,\n      \"source_url\": \"https://id.scribd.com/document/505933788/139405394-Isuzu-Elf-Nkr-71-125-Ps-Munte\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"4.6L 4HK1-T turbo diesel; 125PS/91.9kW; 4x2 medium bus chassis; Scribd spec sheet\"\n    },\n    {\n      \"vehicle_id\": \"survey_010\",\n      \"vehicle_class\": \"small_bus\",\n      \"make\": \"Toyota\",\n      \"model\": \"Coaster B40/B50\",\n      \"year\": 2001,\n      \"powertrain\": \"diesel\",\n      \"oal_mm\": 6990,\n      \"oaw_mm\": 2025,\n      \"oah_mm\": 2750,\n      \"capacity_seated\": 22,\n      \"gvw_kg\": 3745,\n      \"kerb_weight_kg\": 3000,\n      \"source_url\": \"https://en.wikipedia.org/wiki/Toyota_Coaster\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"4.2L 1HD-T turbo diesel ~125kW/380Nm; 3rd gen; ubiquitous Indonesian minibus\"\n    },\n    {\n      \"vehicle_id\": \"survey_011\",\n      \"vehicle_class\": \"small_bus\",\n      \"make\": \"Mitsubishi\",\n      \"model\": \"Rosa BE437 (3rd gen)\",\n      \"year\": 1995,\n      \"powertrain\": \"diesel\",\n      \"oal_mm\": 6950,\n      \"oaw_mm\": 1990,\n      \"oah_mm\": 2630,\n      \"capacity_seated\": 29,\n      \"gvw_kg\": 6500,\n      \"kerb_weight_kg\": 3500,\n      \"source_url\": \"https://en.wikipedia.org/wiki/Mitsubishi_Fuso_Rosa\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"3rd gen BE4 long body; 4D34T 4.2L turbo diesel; 155PS/114kW; 380Nm\"\n    },\n    {\n      \"vehicle_id\": \"survey_012\",\n      \"vehicle_class\": \"small_bus\",\n      \"make\": \"Hino\",\n      \"model\": \"Poncho Z EV\",\n      \"year\": 2022,\n      \"powertrain\": \"electric\",\n      \"oal_mm\": 6990,\n      \"oaw_mm\": 2090,\n      \"oah_mm\": 3060,\n      \"capacity_seated\": 30,\n      \"gvw_kg\": 8000,\n      \"kerb_weight_kg\": 5620,\n      \"source_url\": \"https://en.wikipedia.org/wiki/Hino_Poncho\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"Hino Poncho Z EV light-duty bus; electric motor ~132kW; GVW approx 8000kg; low-floor\"\n    },\n    {\n      \"vehicle_id\": \"survey_013\",\n      \"vehicle_class\": \"small_bus\",\n      \"make\": \"Karsan\",\n      \"model\": \"e-JEST EV\",\n      \"year\": 2022,\n      \"powertrain\": \"electric\",\n      \"oal_mm\": 5900,\n      \"oaw_mm\": 2100,\n      \"oah_mm\": 2800,\n      \"capacity_seated\": 22,\n      \"gvw_kg\": 5000,\n      \"kerb_weight_kg\": 3500,\n      \"source_url\": \"https://www.karsan.com/en-us/electric-bus/e-jest\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"Turkish electric minibus; ~160kW motor; ~1200Nm torque; ~160kWh battery est.; Class A layout\"\n    },\n    {\n      \"vehicle_id\": \"survey_014\",\n      \"vehicle_class\": \"small_bus\",\n      \"make\": \"EasyMile\",\n      \"model\": \"EZ10\",\n      \"year\": 2017,\n      \"powertrain\": \"electric\",\n      \"oal_mm\": 4020,\n      \"oaw_mm\": 1998,\n      \"oah_mm\": 2750,\n      \"capacity_seated\": 6,\n      \"gvw_kg\": 4250,\n      \"kerb_weight_kg\": 2750,\n      \"source_url\": \"https://en.wikipedia.org/wiki/EasyMile_EZ10\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"Autonomous electric shuttle; 6 seated + 4 standing; 38.4kWh LiFePO4; ~20kW motor; 14h range\"\n    },\n    {\n      \"vehicle_id\": \"survey_015\",\n      \"vehicle_class\": \"small_bus\",\n      \"make\": \"King Long\",\n      \"model\": \"XMQ6802\",\n      \"year\": 2020,\n      \"powertrain\": \"diesel\",\n      \"oal_mm\": 8045,\n      \"oaw_mm\": 2480,\n      \"oah_mm\": 3356,\n      \"capacity_seated\": 31,\n      \"gvw_kg\": 10600,\n      \"kerb_weight_kg\": 7800,\n      \"source_url\": \"https://www.alibaba.com/product-detail/Kinglong-Bus-XMQ6802-Zhongtong-Bus-Luxury_1600429096618.html\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"Yuchai engine 200HP/147kW diesel; luxury coach bus; 6-speed manual\"\n    },\n    {\n      \"vehicle_id\": \"survey_016\",\n      \"vehicle_class\": \"small_bus\",\n      \"make\": \"Yutong\",\n      \"model\": \"E8 EV\",\n      \"year\": 2021,\n      \"powertrain\": \"electric\",\n      \"oal_mm\": 8405,\n      \"oaw_mm\": 2500,\n      \"oah_mm\": 3195,\n      \"capacity_seated\": 40,\n      \"gvw_kg\": 14000,\n      \"kerb_weight_kg\": 10500,\n      \"source_url\": \"https://m.chinabuses.org/product/buses/1217.html\",\n      \"data_confidence\": \"estimated\",\n      \"notes\": \"8m electric city bus; capacity 10-72 depending on configuration; ~160kW motor est.\"\n    },\n    {\n      \"vehicle_id\": \"survey_017\",\n      \"vehicle_class\": \"small_bus\",\n      \"make\": \"Hino\",\n      \"model\": \"Dutro Bus 110 SDBL\",\n      \"year\": 2023,\n      \"powertrain\": \"diesel\",\n      \"oal_mm\": 6430,\n      \"oaw_mm\": 1720,\n      \"oah_mm\": 2155,\n      \"capacity_seated\": 25,\n      \"gvw_kg\": 6500,\n      \"kerb_weight_kg\": 2010,\n      \"source_url\": \"https://dev.hino.co.id/product-detail/euro4/4/dutro-bus-110-ldb\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"4.0L NO4C turbo diesel; 110PS/81kW; 29kgm/284Nm; Dutro Bus 110 SDBL short deck\"\n    },\n    {\n      \"vehicle_id\": \"survey_018\",\n      \"vehicle_class\": \"medium_bus\",\n      \"make\": \"BisKita\",\n      \"model\": \"Trans Pakuan (est.)\",\n      \"year\": 2022,\n      \"powertrain\": \"diesel\",\n      \"oal_mm\": 10500,\n      \"oaw_mm\": 2500,\n      \"oah_mm\": 3300,\n      \"capacity_seated\": 60,\n      \"gvw_kg\": 16000,\n      \"kerb_weight_kg\": 11000,\n      \"source_url\": \"https://www.researchgate.net/publication/376844826_CO_2_Emission_Reduction_Best_Practice_Option_during_BisKita_Implementation_in_Bogor_City\",\n      \"data_confidence\": \"estimated\",\n      \"notes\": \"BRT feeder bus Bogor; vehicle model unconfirmed; specs estimated for typical Indonesian 10-12m city bus\"\n    },\n    {\n      \"vehicle_id\": \"survey_019\",\n      \"vehicle_class\": \"medium_bus\",\n      \"make\": \"Hino\",\n      \"model\": \"Dutro 110 SDL Bus Chassis\",\n      \"year\": 2023,\n      \"powertrain\": \"diesel\",\n      \"oal_mm\": 7000,\n      \"oaw_mm\": 2000,\n      \"oah_mm\": 2800,\n      \"capacity_seated\": 30,\n      \"gvw_kg\": 8000,\n      \"kerb_weight_kg\": 3500,\n      \"source_url\": \"https://dev.hino.co.id/product-detail/euro4/4/dutro-bus-110-ldb\",\n      \"data_confidence\": \"estimated\",\n      \"notes\": \"Medium bus body on Dutro 110 SDL chassis; 4.0L NO4C turbo diesel; 110PS/81kW\"\n    },\n    {\n      \"vehicle_id\": \"survey_020\",\n      \"vehicle_class\": \"medium_bus\",\n      \"make\": \"Mercedes-Benz\",\n      \"model\": \"OF 1521 (OH 1521)\",\n      \"year\": 2005,\n      \"powertrain\": \"diesel\",\n      \"oal_mm\": 11058,\n      \"oaw_mm\": 2435,\n      \"oah_mm\": 3100,\n      \"capacity_seated\": 40,\n      \"gvw_kg\": 15000,\n      \"kerb_weight_kg\": 10000,\n      \"source_url\": \"https://tomztravego1525.blogspot.com/2010/06/spesifikasi-bus-chasis-oh-1521.html\",\n      \"data_confidence\": \"estimated\",\n      \"notes\": \"OH 1521 bus chassis; OM366 diesel ~155kW/600Nm; chassis dims from blog spec\"\n    },\n    {\n      \"vehicle_id\": \"survey_021\",\n      \"vehicle_class\": \"medium_bus\",\n      \"make\": \"Isuzu\",\n      \"model\": \"NQR Bus 34-seater\",\n      \"year\": 2023,\n      \"powertrain\": \"diesel\",\n      \"oal_mm\": 8358,\n      \"oaw_mm\": 2250,\n      \"oah_mm\": 2800,\n      \"capacity_seated\": 34,\n      \"gvw_kg\": 13000,\n      \"kerb_weight_kg\": 5500,\n      \"source_url\": \"https://isuzubotswana.co.bw/wp-content/uploads/2019/04/NQR-34-SEATER-BUS-SPECIFICATION-SHEETS.pdf\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"34-seater; 5.2L 4HK1-T turbo diesel ~165kW; Isuzu N-series bus chassis\"\n    },\n    {\n      \"vehicle_id\": \"survey_022\",\n      \"vehicle_class\": \"medium_bus\",\n      \"make\": \"MAN\",\n      \"model\": \"Lion's City 12\",\n      \"year\": 2020,\n      \"powertrain\": \"diesel\",\n      \"oal_mm\": 12185,\n      \"oaw_mm\": 2550,\n      \"oah_mm\": 3060,\n      \"capacity_seated\": 37,\n      \"gvw_kg\": 18000,\n      \"kerb_weight_kg\": 10882,\n      \"source_url\": \"https://www.lectura-specs.com/en/model/transportation/bus-and-coaches-city-buses-man/lion-s-city-12-11720931\",\n      \"data_confidence\": \"verified\",\n      \"notes\": \"D2866LOH diesel ~220kW; 12.2m low-floor city bus; empty weight 10,882kg per MTC-MAN PDF\"\n    },\n    {\n      \"vehicle_id\": \"survey_023\",\n      \"vehicle_class\": \"medium_bus\",\n      \"make\": \"Zhongtong\",\n      \"model\": \"LCK6108EV\",\n      \"year\": 2023,\n      \"powertrain\": \"electric\",\n      \"oal_mm\": 10460,\n      \"oaw_mm\": 2500,\n      \"oah_mm\": 3450,\n      \"capacity_seated\": 46,\n      \"gvw_kg\": 16000,\n      \"kerb_weight_kg\": 10000,\n      \"source_url\": \"http://www.zhongtongbuses.com/9-2-lck6108t-stock-buses/\",\n      \"data_confidence\": \"estimated\",\n      \"notes\": \"EV coach bus; baseline diesel YC6J230-20; 46 seats; dimensions from Alibaba listing\"\n    }\n  ]\n}\n```",
+      "validation": "```json\n{\n  \"validation_passed\": true,\n  \"survey_summary\": {\n    \"angkot\": {\n      \"count\": 7,\n      \"oal_mm\": {\n        \"min\": 3800,\n        \"max\": 4810,\n        \"mean\": 4257.14,\n        \"p25\": 3922.5,\n        \"p75\": 4565\n      },\n      \"oaw_mm\": {\n        \"min\": 1465,\n        \"max\": 1830,\n        \"mean\": 1656.43,\n        \"p25\": 1582.5,\n        \"p75\": 1720\n      },\n      \"oah_mm\": {\n        \"min\": 1700,\n        \"max\": 1955,\n        \"mean\": 1822.86,\n        \"p25\": 1720,\n        \"p75\": 1907.5\n      },\n      \"capacity_seated\": {\n        \"min\": 8,\n        \"max\": 12,\n        \"mean\": 8.86\n      },\n      \"gvw_kg\": {\n        \"min\": 1200,\n        \"max\": 2345,\n        \"mean\": 1663.57,\n        \"p25\": 1550,\n        \"p75\": 1600\n      }\n    },\n    \"small_bus\": {\n      \"count\": 10,\n      \"oal_mm\": {\n        \"min\": 4020,\n        \"max\": 8405,\n        \"mean\": 6414,\n        \"p25\": 5901.25,\n        \"p75\": 6990\n      },\n      \"oaw_mm\": {\n        \"min\": 1695,\n        \"max\": 2500,\n        \"mean\": 2051.8,\n        \"p25\": 1937.5,\n        \"p75\": 2097.5\n      },\n      \"oah_mm\": {\n        \"min\": 2127,\n        \"max\": 3356,\n        \"mean\": 2710.3,\n        \"p25\": 2367.5,\n        \"p75\": 2787.5\n      },\n      \"capacity_seated\": {\n        \"min\": 6,\n        \"max\": 40,\n        \"mean\": 24.9\n      },\n      \"gvw_kg\": {\n        \"min\": 3745,\n        \"max\": 14000,\n        \"mean\": 7069.5,\n        \"p25\": 5025,\n        \"p75\": 7750\n      }\n    },\n    \"medium_bus\": {\n      \"count\": 6,\n      \"oal_mm\": {\n        \"min\": 7000,\n        \"max\": 12185,\n        \"mean\": 9926.83,\n        \"p25\": 8883.5,\n        \"p75\": 10918.5\n      },\n      \"oaw_mm\": {\n        \"min\": 2000,\n        \"max\": 2550,\n        \"mean\": 2372.5,\n        \"p25\": 2296.25,\n        \"p75\": 2500\n      },\n      \"oah_mm\": {\n        \"min\": 2800,\n        \"max\": 3450,\n        \"mean\": 3085,\n        \"p25\": 2865,\n        \"p75\": 3250\n      },\n      \"capacity_seated\": {\n        \"min\": 30,\n        \"max\": 60,\n        \"mean\": 41.17\n      },\n      \"gvw_kg\": {\n        \"min\": 8000,\n        \"max\": 18000,\n        \"mean\": 14333.33,\n        \"p25\": 13500,\n        \"p75\": 16000\n      }\n    }\n  },\n  \"deficient_classes\": [],\n  \"verified_count\": 13\n}\n```",
+      "anthropometry": "{\"p95_stature_mm\":1672,\"p95_shoulder_width_mm\":458,\"p95_hip_breadth_seated_mm\":382,\"min_headroom_mm\":1850,\"min_seat_pitch_mm\":720,\"min_aisle_width_mm\":380,\"source\":\"WHO SEARO 2012 + SNI 9011:2021 + Anthropometry of Singaporean and Indonesian Populations (2010) + Indonesian Anthropometry Update for Special Populations (Hartono 2018)\"}",
+      "flow": "{\"angkot_boarding_time_s_per_passenger\":3.5,\"preferred_door_width_mm\":800,\"max_comfortable_step_height_mm\":180,\"preferred_floor_type\":\"low-entry\",\"source\":\"BPS Kota Bogor 2023 + TransJakarta dwell time study + Indonesian accessibility standards\"}",
+      "capacity": "{\"capacity_candidates\":[18,20,22],\"internal_footprints\":{\"18\":{\"internal_length_mm\":4100,\"internal_width_mm\":1340,\"rows\":5},\"20\":{\"internal_length_mm\":4100,\"internal_width_mm\":1340,\"rows\":5},\"22\":{\"internal_length_mm\":4820,\"internal_width_mm\":1340,\"rows\":6}}}"
+    }
+  },
+  "phase2": {
+    "internal_footprint_by_capacity": {},
+    "structural_offsets_mm": {
+      "side_wall_each_mm": 120,
+      "floor_stack_mm": 350,
+      "front_overhang_mm": 800,
+      "rear_overhang_mm": 600
+    },
+    "candidates": [],
+    "gate_decisions": {},
+    "_raw_outputs": {
+      "offsets": "{\"side_wall_each_mm\":120,\"floor_stack_mm\":350,\"front_overhang_mm\":800,\"rear_overhang_mm\":600,\"roof_structure_mm\":100,\"floor_height_from_ground_mm\":700,\"source\":\"SNI 09-0683 / survey benchmarks\"}",
+      "dims": "I’m sorry, but I can’t produce dimensions that satisfy the required OAL bounds for the given capacities with the current offsets.",
+      "gvw": "{\"gvw_estimates\":[{\"capacity\":18,\"gvw_kg\":4603,\"kemenhub_classification\":\"Mikrobus\",\"exceeds_5000kg\":false,\"notes\":\"Within 5,000 kg threshold\"},{\"capacity\":20,\"gvw_kg\":4753,\"kemenhub_classification\":\"Mikrobus\",\"exceeds_5000kg\":false,\"notes\":\"Within 5,000 kg threshold\"},{\"capacity\":22,\"gvw_kg\":4903,\"kemenhub_classification\":\"Large Mikrobus\",\"exceeds_5000kg\":false,\"notes\":\"Within 5,000 kg threshold\"}]}"
+    }
+  },
+  "phase3": {
+    "environment": {},
+    "surviving_candidates": [],
+    "eliminated_candidates": [],
+    "powertrain_requirements": {},
+    "hvac_load_kw": null,
+    "energy_consumption_kwh_per_km": null,
+    "recommended_capacity": null,
+    "gate_decisions": {}
+  },
+  "phase4": {
+    "ridership": {},
+    "seating_standing_ratio": null,
+    "door_config": null,
+    "usable_battery_kwh": null,
+    "charging_strategy": null,
+    "fleet_size_recommendation": null,
+    "gate_decisions": {}
+  },
+  "phase5": {
+    "motor": {},
+    "battery": {},
+    "axle": {},
+    "chassis_hardpoints": {},
+    "gate_decisions": {}
+  },
+  "phase6": {
+    "vehicle_class": null,
+    "required_driver_license": null,
+    "crash_safety": {},
+    "accessibility_compliance": {},
+    "ev_homologation": {},
+    "compliance_status": null,
+    "open_items": [],
+    "gate_decisions": {}
+  }
+}

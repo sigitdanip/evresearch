@@ -1,0 +1,13 @@
+{
+  "_instructions": "Edit this file at any time during a run. The system checks it before each agent task starts.",
+  "_last_updated": "",
+  "active_overrides": {},
+  "phase_locks": {
+    "phase1": {},
+    "phase2": {},
+    "phase3": {},
+    "phase4": {},
+    "phase5": {},
+    "phase6": {}
+  }
+}

@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.env
+state/research_state.json
+state/override_log.jsonl
+outputs/final_report.md
