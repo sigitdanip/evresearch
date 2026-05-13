@@ -28,8 +28,8 @@ def run_phase3(state: dict) -> dict:
 
     gate2 = state.get("phase2", {}).get("gate_decisions", {})
     candidates = state.get("phase2", {}).get("candidates", [])
-    confirmed_gvw = float(gate2.get("confirmed_gvw_kg", gate2.get("q2.5_gvw", 5450)))
-    max_oal = float(gate2.get("max_oal_mm", gate2.get("q2.2", 6200)))
+    confirmed_gvw = float(gate2.get("confirmed_gvw_kg", gate2.get("q2.5_gvw")))
+    max_oal = float(gate2.get("max_oal_mm", gate2.get("q2.2")))
 
     candidates_ctx = json.dumps(candidates, indent=2) if candidates else "[]"
 

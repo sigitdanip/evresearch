@@ -20,10 +20,10 @@ def run_phase2(state: dict) -> dict:
     time.sleep(TASK_SLEEP_S)
 
     gate1 = state.get("phase1", {}).get("gate_decisions", {})
-    target_capacity = int(gate1.get("target_capacity", gate1.get("q1.1", 20)))
-    seat_pitch = int(gate1.get("min_seat_pitch_mm", gate1.get("q1.4", 720)))
-    aisle_width = int(gate1.get("min_aisle_width_mm", gate1.get("q1.5", 400)))
-    floor_type = gate1.get("floor_type", gate1.get("q1.3", "low-entry"))
+    target_capacity = int(gate1.get("target_capacity", gate1.get("q1.1")))
+    seat_pitch = int(gate1.get("min_seat_pitch_mm", gate1.get("q1.4")))
+    aisle_width = int(gate1.get("min_aisle_width_mm", gate1.get("q1.5")))
+    floor_type = gate1.get("floor_type", gate1.get("q1.3"))
 
     # Survey p25-p75 bounds for small_bus (primary target class)
     survey_summary = state.get("phase1", {}).get("survey_summary", {})

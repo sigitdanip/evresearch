@@ -22,9 +22,9 @@ def run_phase5(state: dict) -> dict:
     gate4 = state.get("phase4", {}).get("gate_decisions", {})
     gate3 = state.get("phase3", {}).get("gate_decisions", {})
 
-    req_power_kw = float(gate3.get("required_power_kw", gate3.get("q3.3_power_kw", 65.6)))
-    req_torque_nm = float(gate3.get("required_torque_nm", gate3.get("q3.3_torque_nm", 285)))
-    req_battery_kwh = float(gate4.get("usable_battery_kwh", gate4.get("q4.4", 165)))
+    req_power_kw = float(gate3.get("required_power_kw", gate3.get("q3.3_power_kw")))
+    req_torque_nm = float(gate3.get("required_torque_nm", gate3.get("q3.3_torque_nm")))
+    req_battery_kwh = float(gate4.get("usable_battery_kwh", gate4.get("q4.4")))
 
     candidates = state.get("phase2", {}).get("candidates", [])
     target_cap_candidate = next(

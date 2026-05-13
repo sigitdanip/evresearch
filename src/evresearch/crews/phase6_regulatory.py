@@ -21,16 +21,16 @@ def run_phase6(state: dict) -> dict:
     time.sleep(TASK_SLEEP_S)
 
     gate5 = state.get("phase5", {}).get("gate_decisions", {})
-    revised_gvw = float(gate5.get("confirmed_gvw_kg", gate5.get("q6.3_gvw", 6100)))
+    revised_gvw = float(gate5.get("confirmed_gvw_kg", gate5.get("q6.3_gvw")))
     selected_battery = state.get("phase5", {}).get("battery", {})
-    battery_mass = float(selected_battery.get("mass_kg", 980))
+    battery_mass = float(selected_battery.get("mass_kg"))
 
     # Pull confirmed dimension decisions from Gate 2
     gate2 = state.get("phase2", {}).get("gate_decisions", {})
-    oal = float(gate2.get("confirmed_oal_mm", 6100))
-    oaw = float(gate2.get("confirmed_oaw_mm", 2050))
+    oal = float(gate2.get("confirmed_oal_mm"))
+    oaw = float(gate2.get("confirmed_oaw_mm"))
     aisle_width = float(
-        state.get("phase1", {}).get("gate_decisions", {}).get("min_aisle_width_mm", 400)
+        state.get("phase1", {}).get("gate_decisions", {}).get("min_aisle_width_mm")
     )
 
     ctx = (

@@ -21,9 +21,9 @@ def run_phase4(state: dict) -> dict:
     time.sleep(TASK_SLEEP_S)
 
     gate3 = state.get("phase3", {}).get("gate_decisions", {})
-    confirmed_capacity = int(gate3.get("confirmed_capacity", gate3.get("q3.2", 20)))
-    kwh_per_km = float(gate3.get("kwh_per_km", gate3.get("q3.4", 1.41)))
-    power_margin = gate3.get("power_margin", "15%")
+    confirmed_capacity = int(gate3.get("confirmed_capacity", gate3.get("q3.2")))
+    kwh_per_km = float(gate3.get("kwh_per_km", gate3.get("q3.4")))
+    power_margin = gate3.get("power_margin")
 
     ctx = (
         f"Confirmed capacity: {confirmed_capacity} passengers | "
