@@ -10,12 +10,12 @@ def get_questions(state: dict) -> list[Question]:
     axle = phase5.get("axle", {})
     hardpoints = phase5.get("chassis_hardpoints", {})
 
-    motor_label = f"{motor.get('supplier','?')} {motor.get('model','?')} ({motor.get('continuous_kw','?')}kW)"
+    motor_label = f"{motor.get('supplier')} {motor.get('model')} ({motor.get('continuous_kw')}kW)"
     battery_label = (
-        f"{battery.get('supplier','?')} {battery.get('model','?')} "
-        f"({battery.get('usable_kwh','?')}kWh usable)"
+        f"{battery.get('supplier')} {battery.get('model')} "
+        f"({battery.get('usable_kwh')}kWh usable)"
     )
-    axle_label = f"{axle.get('supplier','?')} {axle.get('model','?')}"
+    axle_label = f"{axle.get('supplier')} {axle.get('model')}"
 
     return [
         Question(
@@ -53,9 +53,9 @@ def get_questions(state: dict) -> list[Question]:
             id="q5.4",
             prompt=(
                 "Chassis hardpoint confirmation\n"
-                f"  Battery box floor height: {hardpoints.get('battery_box_floor_height_mm', 200)}mm\n"
-                f"  Motor cradle: {hardpoints.get('motor_cradle_position', 'rear')}\n"
-                f"  Suspension type: {hardpoints.get('suspension_type', 'coil-spring')}\n"
+                f"  Battery box floor height: {hardpoints.get('battery_box_floor_height_mm')}mm\n"
+                f"  Motor cradle: {hardpoints.get('motor_cradle_position')}\n"
+                f"  Suspension type: {hardpoints.get('suspension_type')}\n"
                 "  Accept agent defaults or enter overrides in override section?"
             ),
             options=[

@@ -6,17 +6,18 @@ from evresearch.gates.gate_runner import Question, QuestionOption
 def get_questions(state: dict) -> list[Question]:
     phase4 = state.get("phase4", {})
     ridership = phase4.get("ridership", {})
-    usable_kwh = phase4.get("usable_battery_kwh", 165)
-    fleet = phase4.get("fleet_size_recommendation", 4)
+    usable_kwh = phase4.get("usable_battery_kwh")
+    fleet = phase4.get("fleet_size_recommendation")
 
-    daily_km = ridership.get("route_length_km", 12) * 15  # 15 trips estimate
+    route_len = ridership.get("route_length_km")
+    daily_km = route_len * 15 if route_len is not None else None
 
     return [
         Question(
             id="q4.1",
             prompt=(
                 "Seating/standing ratio\n"
-                f"  Trip duration: ~{ridership.get('average_trip_duration_min', 22)} min "
+                f"  Trip duration: ~{ridership.get('average_trip_duration_min')} min "
                 "(within PM 98/2017 30-min standing tolerance)"
             ),
             options=[

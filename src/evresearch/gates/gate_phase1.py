@@ -9,18 +9,18 @@ def get_questions(state: dict) -> list[Question]:
     phase1 = state.get("phase1", {})
     anthro = phase1.get("anthropometry", {})
     ingress = phase1.get("ingress_egress", {})
-    candidates = phase1.get("capacity_candidates", [18, 20, 22])
+    candidates = phase1.get("capacity_candidates")
 
-    p95_stature = anthro.get("p95_stature_mm", 1672)
-    min_seat_pitch = anthro.get("min_seat_pitch_mm", 720)
-    min_aisle = anthro.get("min_aisle_width_mm", 380)
-    boarding_s = ingress.get("angkot_boarding_time_s_per_passenger", 3.2)
+    p95_stature = anthro.get("p95_stature_mm")
+    min_seat_pitch = anthro.get("min_seat_pitch_mm")
+    min_aisle = anthro.get("min_aisle_width_mm")
+    boarding_s = ingress.get("angkot_boarding_time_s_per_passenger")
 
     survey = phase1.get("survey_summary", {}).get("small_bus", {})
-    survey_pitch = survey.get("seat_pitch_min", 680)
-    survey_pitch_max = survey.get("seat_pitch_max", 780)
-    survey_aisle = survey.get("aisle_width_min", 360)
-    survey_aisle_max = survey.get("aisle_width_max", 450)
+    survey_pitch = survey.get("seat_pitch_min")
+    survey_pitch_max = survey.get("seat_pitch_max")
+    survey_aisle = survey.get("aisle_width_min")
+    survey_aisle_max = survey.get("aisle_width_max")
 
     return [
         Question(

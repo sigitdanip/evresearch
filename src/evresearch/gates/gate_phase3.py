@@ -7,16 +7,16 @@ def get_questions(state: dict) -> list[Question]:
     phase3 = state.get("phase3", {})
     env = phase3.get("environment", {})
     surviving = phase3.get("surviving_candidates", [])
-    kwh_per_km = phase3.get("energy_consumption_kwh_per_km", 1.41)
-    rec_capacity = phase3.get("recommended_capacity", 20)
-    gradient = env.get("max_gradient_pct", 18.3)
+    kwh_per_km = phase3.get("energy_consumption_kwh_per_km")
+    rec_capacity = phase3.get("recommended_capacity")
+    gradient = env.get("max_gradient_pct")
     power_reqs = phase3.get("powertrain_requirements", {})
-    base_power = power_reqs.get("recommended_continuous_kw", 57.0)
+    base_power = power_reqs.get("recommended_continuous_kw")
 
-    corner = env.get("tightest_turning_radius_m", 7.2)
+    corner = env.get("tightest_turning_radius_m")
     cap20 = next((c for c in surviving if c.get("capacity") == 20), {})
-    swept_path_20 = cap20.get("swept_path_m", 7.4)
-    margin = round(swept_path_20 - corner, 1)
+    swept_path_20 = cap20.get("swept_path_m")
+    margin = round(swept_path_20 - corner, 1) if swept_path_20 is not None and corner is not None else None
 
     return [
         Question(

@@ -5,21 +5,21 @@ from evresearch.gates.gate_runner import Question, QuestionOption
 
 def get_questions(state: dict) -> list[Question]:
     gate1 = state.get("phase1", {}).get("gate_decisions", {})
-    gate1_capacity = gate1.get("q1.1", "20 passengers")
+    gate1_capacity = gate1.get("q1.1")
     candidates = state.get("phase2", {}).get("candidates", [])
 
     # Find the 20-pax candidate for GVW display
     cap20 = next((c for c in candidates if c.get("capacity") == 20), {})
-    gvw_20 = cap20.get("gvw_kg", 5450)
+    gvw_20 = cap20.get("gvw_kg")
     
     survey = state.get("phase1", {}).get("survey_summary", {}).get("small_bus", {})
-    oal_p75 = survey.get("oal_p75", 6400)
-    oaw_p75 = survey.get("oaw_p75", 2120)
+    oal_p75 = survey.get("oal_p75")
+    oaw_p75 = survey.get("oaw_p75")
     offsets = state.get("phase2", {}).get("structural_offsets_mm", {})
-    side_wall = offsets.get("side_wall_each", 120)
-    floor_stack = offsets.get("floor_stack", 350)
-    front_overhang = offsets.get("front_overhang", 800)
-    rear_overhang = offsets.get("rear_overhang", 600)
+    side_wall = offsets.get("side_wall_each")
+    floor_stack = offsets.get("floor_stack")
+    front_overhang = offsets.get("front_overhang")
+    rear_overhang = offsets.get("rear_overhang")
 
     return [
         Question(

@@ -6,11 +6,11 @@ from evresearch.gates.gate_runner import Question, QuestionOption
 def get_questions(state: dict) -> list[Question]:
     phase6 = state.get("phase6", {})
     open_items = phase6.get("open_items", [])
-    compliance_status = phase6.get("compliance_status", "FEA_PENDING")
-    vehicle_class = phase6.get("vehicle_class", "Mikrobus")
-    license_req = phase6.get("required_driver_license", "SIM B1")
+    compliance_status = phase6.get("compliance_status")
+    vehicle_class = phase6.get("vehicle_class")
+    license_req = phase6.get("required_driver_license")
     phase5 = state.get("phase5", {})
-    battery_mass = phase5.get("battery", {}).get("mass_kg", 980)
+    battery_mass = phase5.get("battery", {}).get("mass_kg")
 
     return [
         Question(
