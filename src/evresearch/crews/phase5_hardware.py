@@ -122,22 +122,13 @@ def run_phase5(state: dict) -> dict:
             f"  - Peak torque: ≥{req_torque_nm}Nm\n"
             f"  - Voltage: 400V preferred\n"
             f"  - Availability: Indonesia or ASEAN distributor\n"
-            "Search: 'ZF AVE 130 e-axle specifications ASEAN', "
-            "'Dana 44e e-axle specifications Indonesia', "
-            "'Bosch eAxle specifications availability ASEAN', "
-            "'DANA SPICER EV driveline specs transit bus'\n"
+            "Search strategy: Broad search for 'e-axle specifications ASEAN', "
+            "'EV motor specifications Indonesia', or 'driveline specs transit bus'\n"
             "Output JSON:\n"
             '{"motor_candidates":['
-            '{"rank":1,"supplier":"ZF","model":"AVE 130",'
-            '"continuous_kw":120,"peak_torque_nm":310,"voltage_v":400,'
-            '"availability":"ASEAN distributor","source_url":"https://..."},'
-            '{"rank":2,"supplier":"Dana","model":"e-Axle 44e",'
-            '"continuous_kw":90,"peak_torque_nm":290,"voltage_v":400,'
-            '"availability":"Indonesia","source_url":"https://..."},'
-            '{"rank":3,"supplier":"Bosch","model":"eAxle Gen2",'
-            '"continuous_kw":100,"peak_torque_nm":300,"voltage_v":400,'
-            '"availability":"ASEAN distributor","source_url":"https://..."}'
-            ']}'
+            '{"rank":<int>,"supplier":"<string>","model":"<string>",'
+            '"continuous_kw":<float>,"peak_torque_nm":<int>,"voltage_v":<int>,'
+            '"availability":"<string>","source_url":"<url>"}]}'
         ),
         expected_output="JSON with motor_candidates array of ≥3 entries with full specs and availability.",
         agent=powertrain_sourcing,
@@ -149,25 +140,15 @@ def run_phase5(state: dict) -> dict:
             f"  - Usable capacity: ≥{req_battery_kwh}kWh\n"
             f"  - Pack fit: ≤{underfloor_length}mm L × ≤{underfloor_width}mm W × ≤{underfloor_depth}mm H\n"
             "  - Chemistry: LFP preferred\n"
-            "Search: 'CATL LF173 pack specifications dimensions', "
-            "'BYD Blade battery module specifications dimensions weight', "
-            "'Gotion L600 LFP pack specifications'\n"
+            "Search strategy: Search for 'LFP pack specifications dimensions' or "
+            "'battery module specifications dimensions weight'\n"
             "For each, verify pack dimensions fit underfloor constraints.\n"
             "Output JSON:\n"
             '{"battery_candidates":['
-            '{"rank":1,"supplier":"CATL","model":"LF173",'
-            '"total_kwh":184,"usable_kwh":147,"pack_length_mm":2200,'
-            '"pack_width_mm":1100,"pack_height_mm":138,"mass_kg":980,'
-            '"fits_underfloor":true,"clearance_mm":50,"source_url":"https://..."},'
-            '{"rank":2,"supplier":"BYD","model":"Blade Module",'
-            '"total_kwh":172,"usable_kwh":138,"pack_length_mm":2050,'
-            '"pack_width_mm":1080,"pack_height_mm":130,"mass_kg":910,'
-            '"fits_underfloor":true,"clearance_mm":200,"source_url":"https://..."},'
-            '{"rank":3,"supplier":"Gotion","model":"L600 LFP",'
-            '"total_kwh":195,"usable_kwh":156,"pack_length_mm":2300,'
-            '"pack_width_mm":1120,"pack_height_mm":140,"mass_kg":1020,'
-            '"fits_underfloor":false,"note":"2300mm exceeds 2250mm limit","source_url":"https://..."}'
-            ']}'
+            '{"rank":<int>,"supplier":"<string>","model":"<string>",'
+            '"total_kwh":<float>,"usable_kwh":<float>,"pack_length_mm":<int>,'
+            '"pack_width_mm":<int>,"pack_height_mm":<int>,"mass_kg":<int>,'
+            '"fits_underfloor":<bool>,"clearance_mm":<int>,"source_url":"<url>"}]}'
         ),
         expected_output=(
             "JSON with battery_candidates array of ≥3 entries with dimensions, "
@@ -182,17 +163,11 @@ def run_phase5(state: dict) -> dict:
             "  - Max payload: ≥3,500kg\n"
             "  - Track width: 1,680–1,760mm\n"
             "  - Type: portal or conventional beam (EV-compatible)\n"
-            "Search: 'Dana 44e portal rear axle specifications Indonesia', "
-            "'ZF RL 75A axle specifications', 'Carraro EV axle specifications'\n"
+            "Search strategy: Broad search for 'portal rear axle specifications Indonesia' or 'EV axle specifications ASEAN'\n"
             "Output JSON:\n"
             '{"axle_candidates":['
-            '{"rank":1,"supplier":"Dana","model":"44e portal rear","max_payload_kg":3800,'
-            '"track_width_mm":1720,"type":"portal","availability":"Indonesia","source_url":"https://..."},'
-            '{"rank":2,"supplier":"ZF","model":"RL 75A","max_payload_kg":4200,'
-            '"track_width_mm":1760,"type":"beam","availability":"ASEAN","source_url":"https://..."},'
-            '{"rank":3,"supplier":"Carraro","model":"28.28 EV","max_payload_kg":3500,'
-            '"track_width_mm":1700,"type":"portal","availability":"import required","source_url":"https://..."}'
-            ']}'
+            '{"rank":<int>,"supplier":"<string>","model":"<string>","max_payload_kg":<int>,'
+            '"track_width_mm":<int>,"type":"<string>","availability":"<string>","source_url":"<url>"}]}'
         ),
         expected_output="JSON with axle_candidates array of ≥3 entries.",
         agent=axle_sourcing,
@@ -208,15 +183,15 @@ def run_phase5(state: dict) -> dict:
             "3. Specify motor_cradle_position (front/rear/centre)\n"
             "4. Recommend suspension_type (leaf/coil/air)\n"
             "Output JSON:\n"
-            '{"selected_motor":{"supplier":"ZF","model":"AVE 130","continuous_kw":120},'
-            '"selected_battery":{"supplier":"CATL","model":"LF173","usable_kwh":147,"mass_kg":980},'
-            '"selected_axle":{"supplier":"Dana","model":"44e portal rear"},'
-            '"revised_gvw_kg":6100,'
+            '{"selected_motor":{"supplier":"<string>","model":"<string>","continuous_kw":<float>},'
+            '"selected_battery":{"supplier":"<string>","model":"<string>","usable_kwh":<float>,"mass_kg":<int>},'
+            '"selected_axle":{"supplier":"<string>","model":"<string>"},'
+            '"revised_gvw_kg":<int>,'
             '"chassis_hardpoints":{'
-            '"battery_box_floor_height_mm":200,'
-            '"motor_cradle_position":"rear",'
-            '"suspension_type":"coil-spring with stabiliser bar",'
-            '"battery_box_dims_mm":"2200 L × 1100 W × 138 H"'
+            '"battery_box_floor_height_mm":<int>,'
+            '"motor_cradle_position":"<string>",'
+            '"suspension_type":"<string>",'
+            '"battery_box_dims_mm":"<string>"'
             '}}'
         ),
         expected_output=(
@@ -263,7 +238,7 @@ def run_phase5(state: dict) -> dict:
             phase5_data["battery"] = parsed.get("selected_battery", {})
             phase5_data["axle"] = parsed.get("selected_axle", {})
             phase5_data["chassis_hardpoints"] = parsed.get("chassis_hardpoints", {})
-        except (json.JSONDecodeError, IndexError, KeyError):
-            pass
+        except (json.JSONDecodeError, IndexError, KeyError) as e:
+            raise ValueError(f"CRITICAL FAILURE: Agent failed to produce valid JSON for phase 5 chassis synthesis. Error: {e}")
 
     return phase5_data

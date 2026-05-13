@@ -94,12 +94,12 @@ def run_phase4(state: dict) -> dict:
     ridership_task = Task(
         description=(
             "Query BPSTransportTool and supplement with web search for Bogor commuter data.\n"
-            "Search: 'BisKita Trans Pakuan ridership Bogor 2023', "
-            "'Stasiun Bogor penumpang harian angkot trips'\n"
+            "Search strategy: Use broad terms like 'BisKita Trans Pakuan ridership Bogor' or "
+            "'Stasiun Bogor angkot trip statistics'\n"
             "Output JSON:\n"
-            '{"peak_hour_factor":1.8,"average_daily_ridership_per_route":420,'
-            '"average_occupancy_off_peak_pct":58.0,"average_trip_duration_min":22,'
-            '"route_length_km":12,"source":"BPS Kota Bogor 2023 + BisKita reports"}'
+            '{"peak_hour_factor":<float>,"average_daily_ridership_per_route":<int>,'
+            '"average_occupancy_off_peak_pct":<float>,"average_trip_duration_min":<int>,'
+            '"route_length_km":<int>,"source":"<string>"}'
         ),
         expected_output="JSON with ridership parameters and source.",
         agent=ridership_analyst,
@@ -108,18 +108,18 @@ def run_phase4(state: dict) -> dict:
     comfort_task = Task(
         description=(
             "Extract PM 98/2017 standards for standing passenger tolerance and door config.\n"
-            "Search: 'PM 98/2017 standar pelayanan minimal angkutan', "
-            "'Permenhub 98 2017 rasio berdiri duduk penumpang'\n"
+            "Search strategy: Broad search for 'PM 98/2017 standar pelayanan minimal angkutan' or "
+            "'Permenhub 98 2017 rasio berdiri duduk'\n"
             "Determine:\n"
             "- Maximum standing ratio permitted for trip ≤30 min\n"
             "- Recommended dwell time budget (seconds per stop)\n"
             "- Door configuration recommendation for 20-pax shuttle\n"
             "Output JSON:\n"
-            '{"pm98_standing_tolerance_trip_min":30,'
-            '"recommended_standing_ratio_pct":20,'
-            '"dwell_time_budget_s":{"min":30,"max":45},'
-            '"recommended_door_config":"1 front + 1 rear (2-leaf each)",'
-            '"source":"PM 98/2017 Kemenhub"}'
+            '{"pm98_standing_tolerance_trip_min":<int>,'
+            '"recommended_standing_ratio_pct":<int>,'
+            '"dwell_time_budget_s":{"min":<int>,"max":<int>},'
+            '"recommended_door_config":"<string>",'
+            '"source":"<string>"}'
         ),
         expected_output="JSON with PM 98/2017 comfort parameters and door config recommendation.",
         agent=comfort_analyst,
@@ -140,11 +140,11 @@ def run_phase4(state: dict) -> dict:
             "Step 6: Model overnight charge: window 20:00–05:00 (9 hours), 40kW AC charger.\n"
             "Step 7: Estimate fleet size from ridership (daily_ridership / vehicle_capacity / trips).\n"
             "Output JSON:\n"
-            '{"daily_route_km":180,"daily_energy_kwh":253.8,"usable_battery_kwh":165,'
-            '"recommended_pack_kwh":165,"charging_strategy":"overnight_depot",'
-            '"overnight_charge_window_h":9,"charger_power_kw":40,'
-            '"fleet_size_recommendation":4,'
-            '"range_with_pack_km":117.0}'
+            '{"daily_route_km":<int>,"daily_energy_kwh":<float>,"usable_battery_kwh":<float>,'
+            '"recommended_pack_kwh":<float>,"charging_strategy":"<string>",'
+            '"overnight_charge_window_h":<int>,"charger_power_kw":<int>,'
+            '"fleet_size_recommendation":<int>,'
+            '"range_with_pack_km":<float>}'
         ),
         expected_output=(
             "JSON with daily_route_km, daily_energy_kwh, usable_battery_kwh, "
@@ -203,7 +203,7 @@ def run_phase4(state: dict) -> dict:
                     phase4_data["usable_battery_kwh"] = parsed.get("usable_battery_kwh")
                     phase4_data["charging_strategy"] = parsed.get("charging_strategy")
                     phase4_data["fleet_size_recommendation"] = parsed.get("fleet_size_recommendation")
-            except (json.JSONDecodeError, IndexError, KeyError):
-                pass
+            except (json.JSONDecodeError, IndexError, KeyError) as e:
+                raise ValueError(f"CRITICAL FAILURE: Agent failed to produce valid JSON for {task_name}. Error: {e}")
 
     return phase4_data

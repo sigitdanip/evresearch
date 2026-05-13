@@ -31,10 +31,7 @@ def run_phase3(state: dict) -> dict:
     confirmed_gvw = float(gate2.get("confirmed_gvw_kg", gate2.get("q2.5_gvw", 5450)))
     max_oal = float(gate2.get("max_oal_mm", gate2.get("q2.2", 6200)))
 
-    candidates_ctx = json.dumps(candidates, indent=2) if candidates else (
-        '[{"capacity":18,"oal_mm":5650,"wheelbase_mm":3450,"oaw_mm":2050,"gvw_kg":5100},'
-        '{"capacity":20,"oal_mm":6100,"wheelbase_mm":3850,"oaw_mm":2050,"gvw_kg":5450}]'
-    )
+    candidates_ctx = json.dumps(candidates, indent=2) if candidates else "[]"
 
     # -----------------------------------------------------------------------
     topography_analyst = Agent(
@@ -153,13 +150,12 @@ def run_phase3(state: dict) -> dict:
         description=(
             "Query OpenStreetMap and web sources for Bogor road geometry constraints.\n"
             "Use BogorGradientQuery tool first.\n"
-            "Supplement with web search: 'Bogor road gradient steep hills transit route', "
-            "'Pasar Anyar Bogor road width junction turning'.\n"
+            "Search strategy: Use broad terms like 'Bogor steep road gradients' or 'Pasar Anyar Bogor road layout'.\n"
             "Output JSON:\n"
-            '{"max_gradient_pct":18.3,"tightest_turning_radius_m":7.2,'
-            '"typical_lane_width_m":3.2,"min_lane_width_m":2.8,'
-            '"critical_locations":["Jl. Sindangbarang (18.3%)",\"Pasar Anyar (7.2m turn)\"],'
-            '"source":"OSM Overpass + field reports"}'
+            '{"max_gradient_pct":<float>,"tightest_turning_radius_m":<float>,'
+            '"typical_lane_width_m":<float>,"min_lane_width_m":<float>,'
+            '"critical_locations":[<list of strings>],'
+            '"source":"<string citing data sources>"}'
         ),
         expected_output="JSON with max_gradient_pct, tightest_turning_radius_m, lane widths, critical locations.",
         agent=topography_analyst,
@@ -170,9 +166,8 @@ def run_phase3(state: dict) -> dict:
             "Query BMKG for Bogor design climate conditions.\n"
             "Use BMKGClimateTool tool.\n"
             "Output JSON:\n"
-            '{"design_temp_c":34.0,"design_rh_pct":88.0,"annual_rainfall_mm":3900,'
-            '"hvac_design_conditions":"34°C / 88% RH per ASHRAE tropical zone",'
-            '"source":"BMKG Stasiun Bogor"}'
+            '{"design_temp_c":<float>,"design_rh_pct":<float>,"annual_rainfall_mm":<int>,'
+            '"hvac_design_conditions":"<string>","source":"<string>"}'
         ),
         expected_output="JSON with design_temp_c, design_rh_pct, annual_rainfall_mm, and source.",
         agent=climate_analyst,
@@ -187,11 +182,9 @@ def run_phase3(state: dict) -> dict:
             "Classify: PASS if ≤ available, MARGINAL if ≤ available + 0.3m, FAIL if > available + 0.3m.\n"
             "Output JSON:\n"
             '{"swept_path_results":['
-            '{"capacity":18,"min_turning_radius_m":6.8,"classification":"PASS"},'
-            '{"capacity":20,"min_turning_radius_m":7.4,"classification":"MARGINAL",'
-            '"note":"0.2m above tightest corner — manageable with route planning"},'
-            '{"capacity":22,"min_turning_radius_m":8.1,"classification":"FAIL"}],'
-            '"tightest_corner_m":7.2}'
+            '{"capacity":<int>,"min_turning_radius_m":<float>,"classification":"<PASS|MARGINAL|FAIL>",'
+            '"note":"<string>"}],'
+            '"tightest_corner_m":<float>}'
         ),
         expected_output=(
             "JSON with swept_path_results array (capacity, min_turning_radius_m, classification, note) "
@@ -211,8 +204,7 @@ def run_phase3(state: dict) -> dict:
             "Add 15% margin to the result for motor specification floor.\n"
             "Output JSON:\n"
             '{"powertrain_requirements":{'
-            '"18pax":{"base_continuous_kw":52.0,"with_15pct_margin_kw":59.8,"peak_torque_nm":260},'
-            '"20pax":{"base_continuous_kw":57.0,"with_15pct_margin_kw":65.6,"peak_torque_nm":285}}}'
+            '"<capacity_str>":{"base_continuous_kw":<float>,"with_15pct_margin_kw":<float>,"peak_torque_nm":<int>}}}'
         ),
         expected_output=(
             "JSON with powertrain_requirements per surviving capacity, "
@@ -235,8 +227,7 @@ def run_phase3(state: dict) -> dict:
             "  average_speed_kmh = 25\n"
             "Output JSON:\n"
             '{"hvac_range_results":{'
-            '"18pax":{"hvac_kw":7.8,"total_kwh_per_km":1.32},'
-            '"20pax":{"hvac_kw":8.4,"total_kwh_per_km":1.41}}}'
+            '"<capacity_str>":{"hvac_kw":<float>,"total_kwh_per_km":<float>}}}'
         ),
         expected_output="JSON with hvac_range_results per capacity showing hvac_kw and total_kwh_per_km.",
         agent=hvac_range_engineer,
@@ -249,16 +240,16 @@ def run_phase3(state: dict) -> dict:
             "Rank surviving candidates. Produce final recommendation with evidence.\n"
             "Format output as:\n"
             '{"environment":{'
-            '"max_gradient_pct":18.3,"tightest_turning_m":7.2,'
-            '"design_temp_c":34.0,"design_rh_pct":88.0},'
-            '"surviving_candidates":[{"capacity":20,"swept_path":"MARGINAL",'
-            '"powertrain_kw":65.6,"hvac_kw":8.4,"kwh_per_km":1.41}],'
-            '"eliminated_candidates":[{"capacity":22,"reason":"Swept path FAIL — 8.1m > 7.5m limit"}],'
-            '"powertrain_requirements":{"recommended_continuous_kw":65.6,"peak_torque_nm":285},'
-            '"hvac_load_kw":8.4,'
-            '"energy_consumption_kwh_per_km":1.41,'
-            '"recommended_capacity":20,'
-            '"recommendation_rationale":"20-pax is the recommended capacity. "}'
+            '"max_gradient_pct":<float>,"tightest_turning_m":<float>,'
+            '"design_temp_c":<float>,"design_rh_pct":<float>},'
+            '"surviving_candidates":[{"capacity":<int>,"swept_path":"<string>",'
+            '"powertrain_kw":<float>,"hvac_kw":<float>,"kwh_per_km":<float>}],'
+            '"eliminated_candidates":[{"capacity":<int>,"reason":"<string>"}],'
+            '"powertrain_requirements":{"recommended_continuous_kw":<float>,"peak_torque_nm":<int>},'
+            '"hvac_load_kw":<float>,'
+            '"energy_consumption_kwh_per_km":<float>,'
+            '"recommended_capacity":<int>,'
+            '"recommendation_rationale":"<string>"}'
         ),
         expected_output=(
             "JSON with environment, surviving_candidates, eliminated_candidates, "
@@ -314,7 +305,7 @@ def run_phase3(state: dict) -> dict:
                     raw = raw[4:]
             parsed = json.loads(raw)
             phase3_data.update({k: parsed[k] for k in parsed if k in phase3_data})
-        except (json.JSONDecodeError, IndexError, KeyError):
-            pass
+        except (json.JSONDecodeError, IndexError, KeyError) as e:
+            raise ValueError(f"CRITICAL FAILURE: Agent failed to produce valid JSON for phase 3 synthesis. Error: {e}")
 
     return phase3_data

@@ -145,13 +145,13 @@ def run_phase6(state: dict) -> dict:
         description=(
             f"Determine Kemenhub vehicle classification for GVW = {revised_gvw}kg.\n"
             "Research: PP 44/1993 vehicle categories, Kemenhub GVW thresholds.\n"
-            "Search: 'Kemenhub klasifikasi kendaraan GVW 6000kg kategori SIM B1', "
+            "Search strategy: Broad search for 'Kemenhub klasifikasi kendaraan GVW kategori SIM B1' or "
             "'PP 44 1993 kendaraan bermotor golongan SIM'\n"
             "Output JSON:\n"
-            '{"gvw_kg":6100,"kemenhub_vehicle_class":"Mikrobus",'
-            '"required_driver_license":"SIM B1",'
-            '"classification_basis":"GVW >5,000kg = Mikrobus per PP 44/1993",'
-            '"source":"PP 44/1993 + Kemenhub classification table"}'
+            '{"gvw_kg":<float>,"kemenhub_vehicle_class":"<string>",'
+            '"required_driver_license":"<string>",'
+            '"classification_basis":"<string>",'
+            '"source":"<string>"}'
         ),
         expected_output="JSON with kemenhub_vehicle_class, required_driver_license, and basis.",
         agent=classification_agent,
@@ -160,15 +160,13 @@ def run_phase6(state: dict) -> dict:
     crash_task = Task(
         description=(
             "Map crash safety standards to the EV shuttle configuration.\n"
-            "Search: 'SNI 09-0683 bus body crashworthiness Indonesia', "
-            "'ECE R66 rollover strength bus requirement', 'ECE R29 frontal impact bus'\n"
+            "Search strategy: Broad search for 'SNI bus body crashworthiness Indonesia', "
+            "'ECE R66 rollover strength bus', or 'ECE R29 frontal impact bus'\n"
             "Identify for each standard: applicable (yes/no), test method, FEA required.\n"
             "Output JSON:\n"
             '{"crash_standards":['
-            '{"standard":"SNI 09-0683 / ECE R66","applies":true,"requirement":"Rollover structural integrity",'
-            '"status":"FEA_REQUIRED","note":"No EV-specific SNI found; ECE R66 as reference"},'
-            '{"standard":"ECE R29","applies":true,"requirement":"Frontal impact",'
-            '"status":"FEA_REQUIRED","note":"Fallback standard"}]}'
+            '{"standard":"<string>","applies":<bool>,"requirement":"<string>",'
+            '"status":"<FEA_REQUIRED|PASS>","note":"<string>"}]}'
         ),
         expected_output="JSON with crash_standards array showing applies, requirement, status, and note.",
         agent=crash_safety_agent,
@@ -183,14 +181,8 @@ def run_phase6(state: dict) -> dict:
             "  - Grab rails: position TBD in CAD\n"
             "Output JSON:\n"
             '{"accessibility_items":['
-            '{"item":"Aisle width","standard":"PM 98/2017","required_mm":380,'
-            f' "designed_mm":{aisle_width},"status":"PASS","notes":""}},'
-            '{"item":"Door width","standard":"PM 98/2017","required_mm":800,'
-            '"designed_mm":820,"status":"PASS","notes":""},'
-            '{"item":"Step height","standard":"PM 98/2017","max_mm":250,'
-            '"designed_mm":200,"status":"PASS","notes":"Low-entry design"},'
-            '{"item":"Grab rails","standard":"PM 98/2017","status":"CONDITIONAL",'
-            '"notes":"Positions TBD in CAD phase"}]}'
+            '{"item":"<string>","standard":"<string>","required_mm":<int>,'
+            '"designed_mm":<int>,"status":"<PASS|FAIL|CONDITIONAL>","notes":"<string>"}]}'
         ),
         expected_output="JSON with accessibility_items array, each with status PASS/FAIL/CONDITIONAL.",
         agent=accessibility_auditor,
@@ -199,19 +191,13 @@ def run_phase6(state: dict) -> dict:
     ev_homologation_task = Task(
         description=(
             "Map Permenhub 44/2020 and UN ECE R100 requirements to the EV configuration.\n"
-            "Search: 'Permenhub 44 2020 kendaraan bermotor listrik persyaratan teknis', "
+            "Search strategy: Broad search for 'Permenhub 44 2020 kendaraan bermotor listrik persyaratan teknis' or "
             "'ECE R100 EV high voltage safety requirements'\n"
             "For each requirement, check if the selected configuration satisfies it.\n"
             "Output JSON:\n"
             '{"ev_items":['
-            '{"item":"Battery isolation switch","standard":"Permenhub 44/2020",'
-            '"status":"PASS","notes":"Standard requirement, included in design"},'
-            '{"item":"Battery fire suppression","standard":"Permenhub 44/2020",'
-            '"status":"CONDITIONAL","notes":"Space allocated, spec TBD"},'
-            '{"item":"HV system isolation","standard":"UN ECE R100",'
-            '"status":"CONDITIONAL","notes":"Pending wiring harness design"},'
-            '{"item":"Thermal management system","standard":"ECE R100",'
-            '"status":"CONDITIONAL","notes":"LFP reduces risk but BMS spec needed"}]}'
+            '{"item":"<string>","standard":"<string>",'
+            '"status":"<PASS|FAIL|CONDITIONAL>","notes":"<string>"}]}'
         ),
         expected_output="JSON with ev_items array showing EV homologation compliance status.",
         agent=ev_homologation_agent,
@@ -226,15 +212,10 @@ def run_phase6(state: dict) -> dict:
             "'PASS' if all PASS, 'CONDITIONAL' if any CONDITIONAL, "
             "'FEA_PENDING' if any FEA_REQUIRED, 'FAIL' if any FAIL.\n"
             "Output JSON:\n"
-            '{"vehicle_class":"Mikrobus","required_driver_license":"SIM B1",'
-            '"compliance_matrix":[...all items from all agents...],'
-            '"compliance_status":"FEA_PENDING",'
-            '"open_items":['
-            '"Rollover FEA required (ECE R66) — commission before prototype",'
-            '"Frontal impact FEA required (ECE R29)",'
-            '"Grab rail positions to be specified in CAD",'
-            '"Fire suppression system spec required",'
-            '"HV wiring harness isolation to be confirmed"]}'
+            '{"vehicle_class":"<string>","required_driver_license":"<string>",'
+            '"compliance_matrix":[<list of all items from all agents>],'
+            '"compliance_status":"<PASS|CONDITIONAL|FEA_PENDING|FAIL>",'
+            '"open_items":[<list of strings describing open items>]}'
         ),
         expected_output=(
             "JSON with vehicle_class, required_driver_license, full compliance_matrix array, "
@@ -293,7 +274,7 @@ def run_phase6(state: dict) -> dict:
                     raw = raw[4:]
             parsed = json.loads(raw)
             phase6_data.update({k: parsed[k] for k in parsed if k in phase6_data})
-        except (json.JSONDecodeError, IndexError, KeyError):
-            pass
+        except (json.JSONDecodeError, IndexError, KeyError) as e:
+            raise ValueError(f"CRITICAL FAILURE: Agent failed to produce valid JSON for phase 6 synthesis. Error: {e}")
 
     return phase6_data

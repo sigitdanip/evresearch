@@ -108,12 +108,12 @@ def run_phase2(state: dict) -> dict:
             "- front_overhang_mm: distance from front axle centreline to front bumper\n"
             "- rear_overhang_mm: distance from rear axle centreline to rear bumper\n"
             "- roof_structure_mm: roof beam + cladding thickness\n"
-            "Search: 'SNI bus body construction structural thickness Indonesia', "
-            "'Indonesian mikrobus wall construction offset'\n"
+            "Search strategy: Use broad terms like 'SNI 09-0683 bus body construction offset' or "
+            "'Indonesian mikrobus structural thickness standard'\n"
             "Output JSON:\n"
-            '{"side_wall_each_mm":120,"floor_stack_mm":350,"front_overhang_mm":800,'
-            '"rear_overhang_mm":600,"roof_structure_mm":100,"floor_height_from_ground_mm":700,'
-            '"source":"SNI 09-0683 / survey benchmarks"}'
+            '{"side_wall_each_mm":<int>,"floor_stack_mm":<int>,"front_overhang_mm":<int>,'
+            '"rear_overhang_mm":<int>,"roof_structure_mm":<int>,"floor_height_from_ground_mm":<int>,'
+            '"source":"<string citing data sources>"}'
         ),
         expected_output="JSON with all structural offset values and source.",
         agent=structural_researcher,
@@ -131,12 +131,12 @@ def run_phase2(state: dict) -> dict:
             f"  22 pax: internal_length_mm=6440, internal_width_mm=1740\n"
             "Output JSON:\n"
             '{"candidates":['
-            '{"capacity":18,"oal_mm":5650,"oaw_mm":2050,"oah_mm":2650,"wheelbase_mm":3450,'
-            '"vehicle_class":"small_bus"},'
-            '{"capacity":20,"oal_mm":6100,"oaw_mm":2050,"oah_mm":2680,"wheelbase_mm":3850,'
-            '"vehicle_class":"small_bus"},'
-            '{"capacity":22,"oal_mm":6550,"oaw_mm":2100,"oah_mm":2720,"wheelbase_mm":4100,'
-            '"vehicle_class":"small_bus"}]}'
+            '{"capacity":18,"oal_mm":<int>,"oaw_mm":<int>,"oah_mm":<int>,"wheelbase_mm":<int>,'
+            '"vehicle_class":"<string>"},'
+            '{"capacity":20,"oal_mm":<int>,"oaw_mm":<int>,"oah_mm":<int>,"wheelbase_mm":<int>,'
+            '"vehicle_class":"<string>"},'
+            '{"capacity":22,"oal_mm":<int>,"oaw_mm":<int>,"oah_mm":<int>,"wheelbase_mm":<int>,'
+            '"vehicle_class":"<string>"}]}'
         ),
         expected_output=(
             "JSON with 'candidates' array of dimension objects for 18, 20, 22 pax, "
@@ -157,12 +157,12 @@ def run_phase2(state: dict) -> dict:
             "Flag any candidate where exceeds_5000kg_threshold = true.\n"
             "Output JSON:\n"
             '{"gvw_estimates":['
-            '{"capacity":18,"gvw_kg":5050,"kemenhub_classification":"Mikrobus",'
-            '"exceeds_5000kg":true,"notes":"SIM B1 required"},'
-            '{"capacity":20,"gvw_kg":5450,"kemenhub_classification":"Mikrobus",'
-            '"exceeds_5000kg":true,"notes":"SIM B1 required"},'
-            '{"capacity":22,"gvw_kg":5900,"kemenhub_classification":"Large Mikrobus",'
-            '"exceeds_5000kg":true,"notes":"SIM B1 required"}]}'
+            '{"capacity":18,"gvw_kg":<int>,"kemenhub_classification":"<string>",'
+            '"exceeds_5000kg":<bool>,"notes":"<string>"},'
+            '{"capacity":20,"gvw_kg":<int>,"kemenhub_classification":"<string>",'
+            '"exceeds_5000kg":<bool>,"notes":"<string>"},'
+            '{"capacity":22,"gvw_kg":<int>,"kemenhub_classification":"<string>",'
+            '"exceeds_5000kg":<bool>,"notes":"<string>"}]}'
         ),
         expected_output=(
             "JSON with gvw_estimates array, each with capacity, gvw_kg, "
@@ -226,7 +226,7 @@ def run_phase2(state: dict) -> dict:
                         if cap in gvw_map:
                             c["gvw_kg"] = gvw_map[cap]["gvw_kg"]
                             c["kemenhub_classification"] = gvw_map[cap]["kemenhub_classification"]
-            except (json.JSONDecodeError, IndexError, KeyError):
-                pass
+            except (json.JSONDecodeError, IndexError, KeyError) as e:
+                raise ValueError(f"CRITICAL FAILURE: Agent failed to produce valid JSON for {task_name}. Error: {e}")
 
     return phase2_data
